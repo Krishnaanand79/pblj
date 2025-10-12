@@ -40,3 +40,96 @@ public class PartA {
         employees.forEach(System.out::println);
     }
 }
+
+// 6.b
+
+import java.util.*;
+import java.util.stream.*;
+
+class Student {
+    String name;
+    int marks;
+
+    Student(String name, int marks) {
+        this.name = name;
+        this.marks = marks;
+    }
+
+    @Override
+    public String toString() {
+        return name + " - " + marks;
+    }
+}
+
+public class PartB {
+    public static void main(String[] args) {
+        List<Student> students = Arrays.asList(
+            new Student("Aman", 65),
+            new Student("Krishna", 88),
+            new Student("Riya", 72),
+            new Student("Dev", 55)
+        );
+
+        System.out.println("Filtered and Sorted Students:");
+        students.stream()
+                .filter(s -> s.marks > 70)
+                .sorted((s1, s2) -> s1.name.compareTo(s2.name))
+                .forEach(System.out::println);
+    }
+}
+
+
+// 6.c
+
+
+import java.util.*;
+import java.util.stream.*;
+
+class Product {
+    int id;
+    String name;
+    double price;
+
+    Product(int id, String name, double price) {
+        this.id = id;
+        this.name = name;
+        this.price = price;
+    }
+
+    @Override
+    public String toString() {
+        return id + " - " + name + " - ₹" + price;
+    }
+}
+
+public class PartC {
+    public static void main(String[] args) {
+        List<Product> products = Arrays.asList(
+            new Product(1, "Laptop", 75000),
+            new Product(2, "Phone", 40000),
+            new Product(3, "Tablet", 30000),
+            new Product(4, "Headphones", 2000)
+        );
+
+        System.out.println("Products with price > 30000:");
+        products.stream()
+                .filter(p -> p.price > 30000)
+                .forEach(System.out::println);
+
+        System.out.println("\nProduct Names:");
+        products.stream()
+                .map(p -> p.name)
+                .forEach(System.out::println);
+
+        double avgPrice = products.stream()
+                                  .mapToDouble(p -> p.price)
+                                  .average()
+                                  .orElse(0);
+        System.out.println("\nAverage Price: ₹" + avgPrice);
+
+        System.out.println("\nSorted by Price (Descending):");
+        products.stream()
+                .sorted((p1, p2) -> Double.compare(p2.price, p1.price))
+                .forEach(System.out::println);
+    }
+}
